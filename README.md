@@ -86,7 +86,7 @@ According to the mechanism of cycle voting, when dishonest users don't exceed 1/
 (7) The votes whose source is located at the finalized block is called as "rooted votes". Only the rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block shall be also regarded as finalized. The "rooted votes" can be transmitted forward; (as shown in Fig. 3)<br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted)*<br>
 
-><div align=left><img src="/res/q_003_004.png" width="60%" /></div>
+><div align=left><img src="/res/q_003_004.png" width="70%" /></div>
 <br>
 
 #### 2.4.2 Safety and activity
