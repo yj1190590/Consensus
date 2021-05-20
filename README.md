@@ -19,8 +19,11 @@ This paper introduces a new design. The following is the introduction to basic a
 ## 2. Consensus processes
 Consensus processes are divided into the following steps:
 (1) Votes generation: Stakeholders generate votes according to the probability based on the stakes held, gain the qualification for voting and become miners to build blocks;
+
 (2) Competition for building blocks: Miners generate blocks and gain awards according to the probability based on the quantity of the votes they have generated;
+
 (3) Confirmation of canonical chain: Miners vote on blocks in cycles and the branch winning the most votes is recognized as the canonical chain;
+
 (4) Block finalization: When the count result of votes meets certain conditions, and it can be determined that this result cannot be changed under the given assumption (2/3 of the nodes are honest). At this time, it is called as block finalization, the branch finalized is the final canonical chain and the data in finalized blocks is the final data.<br><br>
 
 ### 2.1 Votes Generation
@@ -31,6 +34,7 @@ The introduction of qualification for voting is to decrease and flexibly control
 ### 2.2 Competition and generation of blocks
 Stakeholders will begin to participate in the building and maintenance of blockchain after becoming miners. In order to gain awards, miners would have to compete with each other for the right to build blocks:<br>
 (1) A random number operation is conducted based on constants (such as, timestamp and block hash) at miner nodes. When the expected results reach to a certain target and meet the requirements to generate blocks, it is donated as: Block_Proof<target*votes*efficiency. Where, target refers to difficulty, which is used to control the speed of block generation; votes refers to the votes currently owned by miners, which is directly proportional to the possibility of block generation as we can see; and efficiency refers to the efficiency of block generation, which is affected by various factors and will be later introduced in detail;<br>
+
 (2) When the requirements for block generation are met, the miner will pack the voting records along with the transactions he received into a block and publish it on the network.<br><br>
 
 ### 2.3 Confirmation of canonical chain
@@ -51,8 +55,11 @@ Therefore, in order to minimize such blank periods, the miner should choose to v
 #### 2.3.3 Voting rules
 The following voting rules are formulated based on above factors:<br>
 (1) The interval between the target blocks of two votes taken by a miner must be larger than or equal to one voting cycle, otherwise, the miner will be punished;<br>
+
 (2) The interval between the block where the vote in the current chain (the vote with the target block in the current chain) is recorded and the next voting target block must be larger than or equal to the length of "one voting cycle - 1", otherwise, the miner will be punished;<br>
+
 (3) The parameter of block generation efficiency(efficiency) of the miner in current chain  is affected by the "correctness" of his vote in last cycle (1 cycle ≤ distance from current position < 2 cycles). Specifically, the closer the distance from the target block of this vote to current chain (the generations of descendants since the fork), the higher the correctness and the higher the efficiency of block generation. Conversely, it will be lower. The vote whose target block is located in current chain is called as "correct" vote.<br>
+
 (4) The parameter of block generation efficiency of the miner in current chain (efficiency) is affected by the "importance" of his vote in last cycle (the same as above). Specifically, the less the total quantity of correct votes with the target blocks at that height, the more the importance of an individual vote and the higher the efficiency of block generation. Conversely, it will be lower.<br><br>
 
 #### 2.3.4 Information integrity
@@ -72,7 +79,9 @@ When the consensus forms an absolute dominance and the canonical chain cannot be
 According to the mechanism of cycle voting, when dishonest users don't exceed 1/3, we can determine that provided that one branch wins more than 2/3 of total votes during one cycle, this branch should not have competitors and can be finalized. However, in order to guarantee that all finalized branches don’t conflict with each other (i.e., safety), we need a continuous finalization link start from Genesis block. This also requires that the votes should also be consistent. For this purpose, we modify the just voting rule by adding the following rules.<br>
 
 (5) Each vote requires a backward connection to the voter’s previous vote which is called as the "source". The votes without connection to the source are called as "sourceless votes", which will not have any weight as the amendment to wrong votes but can be used as the source of later votes. Sourcesless votes can appear in the same cycle of the votes with source, but they also need to observe previous voting rules (1) and (2), otherwise, they will be punished;<br>
+
 (6) Genesis block is the first finalized block and can be used as the source of later votes without violating other rules.<br>
+
 (7) The votes whose source is located at the finalized block is called as "rooted votes". Only the rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block shall be also regarded as finalized. The "rooted votes" can be transmitted forward; (as shown in Fig. 3)<br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted)*<br>
 
@@ -95,10 +104,12 @@ In order to become aware of the key fork, we should make some adjustments for th
 When a key fork is detected, we find the fork point and the corresponding hesitation period by using a backtracking algorithm:<br>
 
 When Block a at the height of h is generated, we use a natural number n to represent the temporary "hesitation period" at the position of a and the block at the height of h-n is called as the temporary "retracement point", which is generally equal to the fork point. The value of n is based on the following calculation results:<br>
-(i) If the votes gained by the chain within two voting cycles before a (including) exceed 2/3 of the total votes, n=0.
+(i) If the votes gained by the chain within two voting cycles before a (including) exceed 2/3 of the total votes, n=0.<br>
 *\*(For same voter, only the final vote is calculated)*<br>
+
 (ii) If the above-mentioned votes are less than or equal to 2/3 of the total votes, all votes with the target at the height of h are traced back to the height of h-1 and traced back to h-2 together with those votes whose target are at the height of h-1. By parity of reasoning, when traced back to h-i, if the condition in Clause (i) is satisfied, n=i.<br>
 *\*(Most of the votes on the block with the target at the height of h are saved in the block at the height of h+1, so the above work is actually done when Block a’, the next block of Block a, is generated. The corresponding n values are also saved in a', but this doesn't influence the algorithm, because a' must have already been generated when n is used. Further, "all votes with the target at the height of h" can be improved to "all the votes saved at the height of h+1", by parity of reasoning. In this manner, the votes which fail to be recorded at the first time or delay to be published can be calculated.)*<br>
+
 (iii) The height of the temporary retracement points at a position cannot be lower than that of the actual retracement point at the position 2 cycles before a;<br>
 *\*(On the other hand, the retracement points can be replaced by later retracement points with lower height, but they cannot be later than 2 cycles, that is, it should comply with the rule in Clause (iv). 2 cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 7)*<br>
 
@@ -113,6 +124,7 @@ After the hesitation period is gained, the voting retracement and block finaliza
 (1) Each vote of a miner only uses the block where his last vote target or which traces back within N steps (including) as the source. N value is taken from the actual hesitation period at the height of the miner's last voting target in the related chain and the miners who violate this rule will be punished; (as shown in Fig. 8)<br>
 *\*("the related chain" refers the chains where the source and target of the current vote are located. If they are different, we will obtain the actual hesitation period of both chain at the height of current source and use the shorter one. 2)* <br>
 *\*("The height of the miner's last voting target" can be improved to "the height of the block where the miner's last vote is saved - 1", which corresponds to the improvement after Clause (ii) of the backtracking algorithm)* <br>
+
 (2) Counting from the root, when a branch obtains more than 2/3 of the total votes of the system in one voting cycle, and the distance between the sources and targets in the voting records of those votes is less than 2 voting cycles, the finalization condition is satisfied, but the finalized block is not the branch’s root b but the actual retracement point B at b position. (As shown in Fig. 8)<br>
 
 <div align=left><img src="/res/q_008.png" width="70%" /></div>
