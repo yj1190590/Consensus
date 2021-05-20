@@ -17,7 +17,7 @@ For those features, the solutions to the problem of energy consumption were firs
 This paper introduces a new design. The following is the introduction to basic algorithm.<br><br>
 
 ## 2. Consensus processes
-Consensus processes are divided into the following steps:
+Consensus processes are divided into the following steps:<br>
 (1) Votes generation: Stakeholders generate votes according to the probability based on the stakes held, gain the qualification for voting and become miners to build blocks;
 
 (2) Competition for building blocks: Miners generate blocks and gain awards according to the probability based on the quantity of the votes they have generated;
@@ -45,6 +45,7 @@ In our protocol, the priority of branches depends on their "weight" rather than 
 
 <div align=left><img src="/res/q_001.png" width="70%" /></div>
 <br>
+
 #### 2.3.2 Incentive measures
 There are also some problems to be solved in the voting process. Firstly, it should give the miners enough motivation to vote. In this respect, the miners can be motivated by virtue of the method to make the "correctness" of voting relevant to the efficiency of block generation, where, the efficiency of block generation is determined according to the distance (explained later) between the "last period vote"(the vote within the scope of one period to two periods before) to the current chain. Then, this bring the following two problems: when a fork happens, if the miner chooses to vote on the more stable blocks before the fork in order to pursue the correctness, the stable speed of system will be affected; or the miner choose the strategy to delay the voting and not to vote until the fork has presented obvious winner, the stable speed of system will also be affected. For those two problems, we firstly slightly modify the original voting rule. The previous rule is that "the interval of votes cannot be less than the length of one cycle", but the present rule adds that "the interval between the block that records a vote and the next vote cannot be less than the length of 'one cycle - 1'". According to the rule, once a miner votes the earlier block or delays to vote, the interval between his current vote and last vote will surpass one cycle and there will be a “blank period” in his voting sequence. Once the "2 cycles  - 1 ago" of a blocks is located in this blank, the miner’s "last cycle voting" in this position will not exist, so its correctness is zero and the miner cannot build blocks (as shown in Fig. 2).<br>
 
