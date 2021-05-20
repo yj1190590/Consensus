@@ -43,13 +43,13 @@ As a consensus with forks and branches, it is the most important step in the con
 #### 2.3.1 Priority of branches
 In our protocol, the priority of branches depends on their "weight" rather than their height. The "weight" here is not equal to the quantity of blocks but equal to the votes gained by the branch. Definition: the weight of a branch is equal to the quantity of total votes gained by the root and its all descendants. Based on this calculation method, the comparison of two chains in priority should begin from their common ancestors and the weight of their respective branches they belong to should be calculated, respectively. The heavier one shall have the priority. In order to find the canonical chain, we need compare the existing competitive branches one by one and find the chain with the highest priority. (As shown in Fig. 1)<br>
 
-<div align=left><img src="/res/q_001.png" width="50%" /></div>
+><div align=left><img src="/res/q_001.png" width="50%" /></div>
 <br>
 
 #### 2.3.2 Incentive measures
 There are also some problems to be solved in the voting process. Firstly, it should give the miners enough motivation to vote. In this respect, the miners can be motivated by virtue of the method to make the "correctness" of voting relevant to the efficiency of block generation, where, the efficiency of block generation is determined according to the distance (explained later) between the "last period vote"(the vote within the scope of one period to two periods before) to the current chain. Then, this bring the following two problems: when a fork happens, if the miner chooses to vote on the more stable blocks before the fork in order to pursue the correctness, the stable speed of system will be affected; or the miner choose the strategy to delay the voting and not to vote until the fork has presented obvious winner, the stable speed of system will also be affected. For those two problems, we firstly slightly modify the original voting rule. The previous rule is that "the interval of votes cannot be less than the length of one cycle", but the present rule adds that "the interval between the block that records a vote and the next vote cannot be less than the length of 'one cycle - 1'". According to the rule, once a miner votes the earlier block or delays to vote, the interval between his current vote and last vote will surpass one cycle and there will be a “blank period” in his voting sequence. Once the "2 cycles  - 1 ago" of a blocks is located in this blank, the miner’s "last cycle voting" in this position will not exist, so its correctness is zero and the miner cannot build blocks (as shown in Fig. 2).<br>
 
-<div align=left><img src="/res/q_002.png" width="50%" /></div>
+><div align=left><img src="/res/q_002.png" width="50%" /></div>
 <br>
 Therefore, in order to minimize such blank periods, the miner should choose to vote as early as possible and vote on the top block. Secondly, we solve it by making the "importance" of vote relevant to the efficiency of block generation. Which raises the value of the votes when the miners scatter to vote after a fork, by the decision that "the less the number of the correct votes, the more important an individual vote is".<br>
 
@@ -86,20 +86,20 @@ According to the mechanism of cycle voting, when dishonest users don't exceed 1/
 (7) The votes whose source is located at the finalized block is called as "rooted votes". Only the rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block shall be also regarded as finalized. The "rooted votes" can be transmitted forward; (as shown in Fig. 3)<br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted)*<br>
 
-<div align=left><img src="/res/q_003_004.png" width="60%" /></div>
+><div align=left><img src="/res/q_003_004.png" width="60%" /></div>
 <br>
 
 #### 2.4.2 Safety and activity
 The principle to guarantee safety is very simple: the voter can only connect each vote to the next one and thus the votes cannot keep as an end-to-end link (as shown in Fig. 3) if there exists conflicting votes, so his voting link will not have conflict. Now that the voting links of single voters don’t have conflicts, the finalization points generated based on the continuous voting links will not conflict either, thus guaranteeing the safety. (As shown in Fig. 5)<br>
 
-<div align=left><img src="/res/q_005.png" width="50%" /></div>
+><div align=left><img src="/res/q_005.png" width="50%" /></div>
 
 However, this still cannot meet the requirements for liveness obviously, because it is very likely that more than 1/3 of votes will be taken on wrong branches after a fork appears. Once such case appears, the finalization link will be broken and cannot be recovered. Therefore, in order to keep liveness, it is more complex: firstly, we should become aware of such case - we call it "key fork"; then we should allow the sources of the next votes to move back to the fork position from the current targets, giving a hesitation space to the voters and allowing them to correct their previous decisions and return to the canonical chain; finally, we should delay the finalization point to the fork position.<br><br>
 
 #### 2.4.3 Awareness and positioning of key fork
 In order to become aware of the key fork, we should make some adjustments for the finalization condition. The previous condition in which "more than 2/3 of the total votes be gained during one voting cycle" should be replaced by the condition in which "more than 2/3 of the total votes must be gained during one voting cycle and the distance between the targets and the source of those votes shall be less than two cycles". In other words, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes which can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 6). In this way do we only need to inspect whether there are sufficient votes in this range.<br>
 
-<div align=left><img src="/res/q_006.png" width="50%" /></div>
+><div align=left><img src="/res/q_006.png" width="50%" /></div>
 
 When a key fork is detected, we find the fork point and the corresponding hesitation period by using a backtracking algorithm:<br>
 
@@ -113,7 +113,7 @@ When Block a at the height of h is generated, we use a natural number n to repre
 (iii) The height of the temporary retracement points at a position cannot be lower than that of the actual retracement point at the position 2 cycles before a;<br>
 *\*(On the other hand, the retracement points can be replaced by later retracement points with lower height, but they cannot be later than 2 cycles, that is, it should comply with the rule in Clause (iv). 2 cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 7)*<br>
 
-<div align=left><img src="/res/q_007.png" width="50%" /></div>
+><div align=left><img src="/res/q_007.png" width="50%" /></div>
 
 (iv) The actual retracement point at a poistion is taken from the earliest temporary retracement point during 2 cycles after a position (including) and the actual hesitation period N also results from this;<br>
 *\*(Therefore, at the worst case, a block has to wait 2 cycles after it is generated until it can be finalized. However, generally, provided that one chain after this block gain 2/3 of the votes during those 2 cycles, there will be no retracement point earlier than this block and we can get the actual retracement point right then so that it can be finalized immediately.)*<br><br>
@@ -127,7 +127,7 @@ After the hesitation period is gained, the voting retracement and block finaliza
 
 (2) Counting from the root, when a branch obtains more than 2/3 of the total votes of the system in one voting cycle, and the distance between the sources and targets in the voting records of those votes is less than 2 voting cycles, the finalization condition is satisfied, but the finalized block is not the branch’s root b but the actual retracement point B at b position. (As shown in Fig. 8)<br>
 
-<div align=left><img src="/res/q_008.png" width="50%" /></div>
+><div align=left><img src="/res/q_008.png" width="50%" /></div>
 
 By this method, generally (in an ideal case), all N values are 0. We can complete the finalization around 2/3 voting cycle after the block is generated. Occasionally, some forks with serious divergences may extend the length of several cycles, but the general finalization time must be far less than two cycles. When the network situation is very poor or the votes are particularly scattered due to attacks, we can become aware of the fork in advance and delay the finalization, relax the requirements for voting and improve the fault-tolerance of the system to prevent the hostile attacks of swinging from side to side to extend the depths of a fork from causing the loss of liveness. By the way, our calculation method of branch weight, not like Latest Message Driven (LMD) scheme, doesn't only count the final vote but troublesomely count all votes and restrict votes with voting cycle, because it will have stronger resistance to such attacks <sup>[4](#Notes)</sup>.<br><br>
 
