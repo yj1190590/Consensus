@@ -150,12 +150,12 @@ The above four steps constitute the primary algorithm of this protocol. Because 
 Patent NO.: 202110495622.6.
 
 ## Notes
-1	VRF, "Verifiable Random Function", is a random function using private key to encrypt and public key to verify, and its application can avoid that the generated votes are predicted by attackers in advance. [←](#2.1-Votes-Generation) <br>
+1	VRF, "Verifiable Random Function", is a random function using private key to encrypt and public key to verify, and its application can avoid that the generated votes are predicted by attackers in advance. [←](#21-Votes-Generation) <br>
 
-2	In order to apply the function, we should save the temporary hesitation period into block headers for the other chains to obtain from their own views. [←](#2.4.4-Voting-retracement-and-delayed-finalization) <br>
+2	In order to apply the function, we should save the temporary hesitation period into block headers for the other chains to obtain from their own views. [←](#244-Voting-retracement-and-delayed-finalization) <br>
 
-3	Miners will use the longest hesitation period they can get so far if the actual hesitation period doesn’t show up. It could be too strict with the current vote but doesn’t affect safety because the retracement point is surely later than the actual one; it doesn’t affect liveness either because the actual retracement points will be back to the points of key forks later, so the voters can return to canonical chain from their follow-up votes. [←](#2.4.4-Voting-retracement-and-delayed-finalization) <br>
+3	Miners will use the longest hesitation period they can get so far if the actual hesitation period doesn’t show up. It could be too strict with the current vote but doesn’t affect safety because the retracement point is surely later than the actual one; it doesn’t affect liveness either because the actual retracement points will be back to the points of key forks later, so the voters can return to canonical chain from their follow-up votes. [←](#244-Voting-retracement-and-delayed-finalization) <br>
 
-4	When only the final vote is counted and votes are not restricted by the voting cycle, the voting of attackers on one fork not only increases the weight of current branch but also deducts the weight from the previous branch he voted. Such process causes that the effect of such attack is twice the weight of his own votes. [←](#2.4.4-Voting-retracement-and-delayed-finalization) <br>
+4	When only the final vote is counted and votes are not restricted by the voting cycle, the voting of attackers on one fork not only increases the weight of current branch but also deducts the weight from the previous branch he voted. Such process causes that the effect of such attack is twice the weight of his own votes. [←](#244-Voting-retracement-and-delayed-finalization) <br>
 
 
