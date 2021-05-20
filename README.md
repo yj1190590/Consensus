@@ -1,5 +1,7 @@
 # A Chain-based Consensus Algorithm Using Cyclical Voting Process
+
 **Abstract.** introduces the major algorithm of this chain-based proof-of-stake mechanism through the description of voting, canonical chain determination and finalization processes.<br>
+
 **KEY WORDS.** 
 1. Canonical Chain.
 2. Finality. 
