@@ -86,13 +86,13 @@ According to the mechanism of cycle voting, when dishonest users don't exceed 1/
 (7) The votes whose source is located at the finalized block is called as "rooted votes". Only the rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block shall be also regarded as finalized. The "rooted votes" can be transmitted forward; (as shown in Fig. 3)<br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted)*<br>
 
-<div align=left><img src="/res/q_003_004.png" width="50%" /></div>
+<div align=left><img src="/res/q_003_004.png" width="60%" /></div>
 <br>
 
 #### 2.4.2 Safety and activity
 The principle to guarantee safety is very simple: the voter can only connect each vote to the next one and thus the votes cannot keep as an end-to-end link (as shown in Fig. 3) if there exists conflicting votes, so his voting link will not have conflict. Now that the voting links of single voters don’t have conflicts, the finalization points generated based on the continuous voting links will not conflict either, thus guaranteeing the safety. (As shown in Fig. 5)<br>
 
-<div align=left><img src="/res/q_005.png" width="70%" /></div>
+<div align=left><img src="/res/q_005.png" width="50%" /></div>
 
 However, this still cannot meet the requirements for liveness obviously, because it is very likely that more than 1/3 of votes will be taken on wrong branches after a fork appears. Once such case appears, the finalization link will be broken and cannot be recovered. Therefore, in order to keep liveness, it is more complex: firstly, we should become aware of such case - we call it "key fork"; then we should allow the sources of the next votes to move back to the fork position from the current targets, giving a hesitation space to the voters and allowing them to correct their previous decisions and return to the canonical chain; finally, we should delay the finalization point to the fork position.<br><br>
 
