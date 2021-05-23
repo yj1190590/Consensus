@@ -43,7 +43,7 @@ As a consensus with forks and branches, the most important step in the consensus
 #### 2.3.1 Priority of branches
 In our protocol, the priority of branches depends on their “weight” rather than their height. The “weight” here is not equal to the number of blocks but is equal to the votes gained by the branch. The weight of a branch is the number of total votes gained by the root and all its descendants. From this calculation method, the comparison of two chains in priority begins from their common ancestors and the weight of the respective branches they belong to be calculated. The heavier one takes priority. To find the canonical chain, we should compare the existing competitive branches one by one and find the chain with the highest priority (as shown in Fig. 1).<br>
 
-><div align=left><img src="/res/q_001.png" width="30%" /></div>
+><div align=left><img src="/res/q_001.png" width="40%" /></div>
 <br>
 
 #### 2.3.2 Incentive measures
@@ -96,7 +96,7 @@ The principle to guarantee safety is simple: the voter only connects each vote t
 <br>
 However, this cannot meet the requirements for liveness because it is very likely that more than 1/3 of votes will be taken on wrong branches after a fork appears. Once such a case appears, the finalization link breaks without recovery. Therefore, to keep liveness, first, become aware of such case - we call it “key fork”; then, we allow the sources of the next votes to move back to the fork position from the current targets. This provides a hesitation space to the voters and allows them to correct their previous decisions and return to the canonical chain (as shown in Fig. 6). Lastly, we delay the finalization point to the fork position.<br>
 
-><div align=left><img src="/res/q_006.png" width="30%" /></div>
+><div align=left><img src="/res/q_006.png" width="40%" /></div>
 <br><br>
 
 #### 2.4.3 Awareness and positioning of the key fork
