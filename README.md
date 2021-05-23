@@ -92,7 +92,7 @@ From the mechanism of cycle voting, when dishonest users do not exceed 1/3, we d
 #### 2.4.2 Safety and activity
 The principle to guarantee safety is simple: the voter only connects each vote to the next one, and thus, votes are unkept as an end-to-end link (as shown in Fig. 3) if there exist conflicting votes, so his voting link will not have conflict. Now that the voting links of single voters do not have conflicts, the finalization points generated based on the continuous voting links will not conflict either, thus guaranteeing safety (as shown in Fig. 5).<br>
 
-><div align=left><img src="/res/q_005.png" width="40%" /></div>
+><div align=left><img src="/res/q_005.png" width="35%" /></div>
 <br>
 However, this cannot meet the requirements for liveness because it is very likely that more than 1/3 of votes will be taken on wrong branches after a fork appears. Once such a case appears, the finalization link breaks without recovery. Therefore, to keep liveness, first, become aware of such case - we call it “key fork”; then, we allow the sources of the next votes to move back to the fork position from the current targets. This provides a hesitation space to the voters and allows them to correct their previous decisions and return to the canonical chain (as shown in Fig. 6). Lastly, we delay the finalization point to the fork position.<br>
 
@@ -102,7 +102,7 @@ However, this cannot meet the requirements for liveness because it is very likel
 #### 2.4.3 Awareness and positioning of the key fork
 To become aware of the key fork, we adjust some finalization conditions. The previous condition in which “more than 2/3 of the total votes be gained during one voting cycle” is replaced with “more than 2/3 of the total votes be gained during one voting cycle and the distance between the targets and the source of those votes is less than two cycles.” Therefore, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes that can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 7). This way, we need only to inspect whether there are sufficient votes in this range.<br>
 
-><div align=left><img src="/res/q_007.png" width="50%" /></div>
+><div align=left><img src="/res/q_007.png" width="45%" /></div>
 <br>
 
 When a key fork is detected, we find the fork point and the corresponding hesitation period using a backtracking algorithm.<br>
