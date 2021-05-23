@@ -43,7 +43,7 @@ As a consensus with forks and branches, the most important step in the consensus
 #### 2.3.1 Priority of branches
 In our protocol, the priority of branches depends on their “weight” rather than their height. The “weight” here is not equal to the number of blocks but is equal to the votes gained by the branch. The weight of a branch is the number of total votes gained by the root and all its descendants. From this calculation method, the comparison of two chains in priority begins from their common ancestors and the weight of the respective branches they belong to be calculated. The heavier one takes priority. To find the canonical chain, we should compare the existing competitive branches one by one and find the chain with the highest priority (as shown in Fig. 1).<br>
 
-><div align=left><img src="/res/q_001.png" width="50%" /></div>
+><div align=left><img src="/res/q_001.png" width="30%" /></div>
 <br>
 
 #### 2.3.2 Incentive measures
@@ -92,11 +92,11 @@ From the mechanism of cycle voting, when dishonest users do not exceed 1/3, we d
 #### 2.4.2 Safety and activity
 The principle to guarantee safety is simple: the voter only connects each vote to the next one, and thus, votes are unkept as an end-to-end link (as shown in Fig. 3) if there exist conflicting votes, so his voting link will not have conflict. Now that the voting links of single voters do not have conflicts, the finalization points generated based on the continuous voting links will not conflict either, thus guaranteeing safety (as shown in Fig. 5).<br>
 
-><div align=left><img src="/res/q_005.png" width="50%" /></div>
+><div align=left><img src="/res/q_005.png" width="40%" /></div>
 <br>
 However, this cannot meet the requirements for liveness because it is very likely that more than 1/3 of votes will be taken on wrong branches after a fork appears. Once such a case appears, the finalization link breaks without recovery. Therefore, to keep liveness, first, become aware of such case - we call it “key fork”; then, we allow the sources of the next votes to move back to the fork position from the current targets. This provides a hesitation space to the voters and allows them to correct their previous decisions and return to the canonical chain (as shown in Fig. 6). Lastly, we delay the finalization point to the fork position.<br>
 
-><div align=left><img src="/res/q_006.png" width="50%" /></div>
+><div align=left><img src="/res/q_006.png" width="30%" /></div>
 <br><br>
 
 #### 2.4.3 Awareness and positioning of the key fork
@@ -131,7 +131,7 @@ After the hesitation period is gained, the voting retracement and block finaliza
 
 (2) Count from the root, when a branch obtains more than 2/3 of the total votes in one voting cycle and the distances between the sources and targets of those votes are less than two voting cycles, the finalization condition is satisfied, but the finalized block is not the branch’s root b but the actual retracement point B at Position b (as shown in Fig. 9).<br>
 
-><div align=left><img src="/res/q_009.png" width="50%" /></div>
+><div align=left><img src="/res/q_009.png" width="40%" /></div>
 <br>
 By this method, generally (in an ideal case), all N values are zero. We can complete the finalization around the 2/3 voting cycle after the block is generated. Some forks with serious divergences can extend the length of several cycles, but the average finalization time should be far less than two cycles. With poor network situation or votes being scattered because of attacks, we can become aware of the fork in advance and delay the finalization, relax the requirements for voting, and improve the fault tolerance of the system to prevent hostile attacks of swinging to extend the depths of a fork from causing the loss of liveness. By the way, our calculation method for branch weight, unlike the latest message driven scheme, does not only count the final vote but also count all votes and restrict votes with the voting cycle because it will have stronger resistance to such attacks. <sup>[4](#Notes)</sup> <br><br>
 
