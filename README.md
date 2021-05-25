@@ -132,7 +132,7 @@ When Block a at height h is generated, we use a natural number n to represent th
 After the hesitation period is gained, the voting retracement and block finalization processes are shown as follows:<br>
 
 (1) Each vote of a miner only uses the block of his previous vote target or the block that traces back within N steps (including) from it as the source. N value is taken from the actual hesitation period at the height of the miner’s previous voting target in the related chain, and miners who violate this rule will be punished (as shown in Fig. 8).<br>
-*\*(“The related chain” is the current chain and the chain where the target of the previous vote is located. If they are different, we will obtain the actual hesitation period of both chains and use the shorter one. <sup>[2](#Notes),[3](#Notes)</sup>)* <br>
+*\*(“The related chain” is the current chain and the chain where the target of the previous vote is located. If they are different, we will obtain the actual hesitation period of both chains and use the shorter one.* <sup>[2](#Notes),[3](#Notes)</sup>) <br>
 *\*(“The height of the miner’s previous voting target” can be improved to “the height of the block, where the miner’s previous vote is saved in the current chain − 1”, which corresponds to the improvement after Clause (ii) of the backtracking algorithm.)* <br>
 
 (2) Count from the root, when a branch obtains more than 2/3 of the total votes in one voting cycle and the distances between the sources and targets of those votes are less than two voting cycles, the finalization condition is satisfied. However, the finalized block is not the branch’s root b but the actual retracement point B at Position b (as shown in Fig. 9).<br>
