@@ -128,8 +128,7 @@ When Block a at height h is generated, we use a natural number n to represent th
 ><div align=left><img src="/res/q_008.png" width="60%" /></div>
 <br>
 
-*撒大苏打*
-(iv) The actual retracement point at Position a is taken from the earliest temporary retracement point during two cycles after Position a (including), and the actual hesitation period N also results from this.<br> *撒大苏打*
+(iv) The actual retracement point at Position a is taken from the earliest temporary retracement point during two cycles after Position a (including), and the actual hesitation period N also results from this.<br> 
 *\*(Therefore, in the worst case, a block has to wait for two cycles after it is generated until it can be finalized. However, provided that one chain after this block gains 2/3 of the votes during those two cycles, there will be no retracement point earlier than this block, and we can get the actual retracement point right then so that it can be finalized immediately.)*<br><br>
 
 #### 2.4.4 Voting retracement and delayed finalization
