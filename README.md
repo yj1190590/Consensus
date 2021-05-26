@@ -106,7 +106,7 @@ However, this cannot meet the requirements for liveness because it is very likel
 <br><br>
 
 #### 2.4.3 Awareness and positioning of the key fork
-To become aware of the key fork, we adjust some finalization conditions. The previous condition in which “more than 2/3 of the total votes be gained during one voting cycle” is replaced with “more than 2/3 of the total votes be gained during one voting cycle and the distance between the targets and the source of those votes is less than two cycles.” Therefore, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes that can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 7). This way, we need only to inspect whether there are sufficient votes in this range.<br>
+To become aware of the key fork, we adjust some finalization conditions. The previous condition in which “more than 2/3 of the total votes be gained during one voting cycle” is replaced with “more than 2/3 of the total votes be gained during one voting cycle and the distance between the targets and the sources of those votes is less than two cycles.” Therefore, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes that can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 7). This way, we need only to inspect whether there are sufficient votes in this range.<br>
 
 ><div align=left><img src="/res/q_007.png" width="55%" /></div>
 <br>
