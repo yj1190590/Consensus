@@ -116,7 +116,7 @@ To become aware of the key fork, we adjust some finalization conditions. The pre
 When a key fork is detected, we find the fork point and the corresponding hesitation period using a backtracking algorithm.<br>
 
 When Block *a* at height *h* is generated, we use a natural number *n* to represent the temporary “hesitation period” at the position of *a*, and the block at a height of *h − n* is called the temporary “retracement point”, which is generally equal to the fork point. The value of *n* is based on the following calculation results:<br>
-(i) If the votes gained by the chain within two voting cycles before *a* (including) exceed 2/3 of the total votes, n = 0.<br>
+(i) If the votes gained by the chain within two voting cycles before *a* (including) exceed 2/3 of the total votes, *n = 0*.<br>
 *\*(For the same voter, only the final vote is calculated.)*<br>
 
 (ii) If the abovementioned votes are less than or equal to 2/3 of the total votes, all votes with the target at a height of *h* are traced back to a height of *h − 1* and traced back to *h − 2* with those votes whose target are at a height of *h − 1*. By parity of reasoning, when traced back to *h − i*, if the condition in Clause (i) is satisfied, *n = i*.<br>
