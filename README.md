@@ -98,7 +98,7 @@ From the mechanism of cycle voting, when dishonest users do not exceed 1/3, we d
 ><div align=left><img src="/res/q_003_004.png" width="60%" /></div>
 <br>
 
-#### 2.4.2 Safety and activity
+#### 2.4.2 Safety and liveness
 The principle to guarantee safety is simple: the voter only connects each vote to the next one, and thus, votes are unkept as an end-to-end link (as shown in Fig. 3) if there exist conflicting votes, so his voting link will not have conflict. Now that the voting links of single voters do not have conflicts, the finalization points generated based on the continuous voting links will not conflict either, thus guaranteeing safety (as shown in Fig. 5).<br>
 
 ><div align=left><img src="/res/q_005.png" width="45%" /></div>
