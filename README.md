@@ -57,6 +57,7 @@ Some problems should be solved in the voting process. First, miners should be mo
 
 ><div align=left><img src="/res/q_002.png" width="60%" /></div>
 <br>
+
 To minimize such blank periods, the miner should vote as early as possible and should vote on the top block. Moreover, we solve it by making the “importance” of voting relevant to the efficiency of block generation. This raises the value of the votes when the miners vote after a fork by the decision that “the less is the number of correct votes, the more important an individual vote is.”<br>
 
 #### 2.3.3 Voting rules
@@ -100,6 +101,7 @@ The principle to guarantee safety is simple: the voter only connects each vote t
 
 ><div align=left><img src="/res/q_005.png" width="45%" /></div>
 <br>
+
 However, this cannot meet the requirements for liveness because it is very likely that more than 1/3 of votes will be taken on wrong branches after a fork appears. Once such a case appears, the finalization link breaks without recovery. Therefore, to keep liveness, first, become aware of such case - we call it “key fork”; then, we allow the sources of the next votes to move back to the fork position from the current targets. This provides a hesitation space to the voters and allows them to correct their previous decisions and return to the canonical chain (as shown in Fig. 6). Lastly, we delay the finalization point to the fork position.<br>
 
 ><div align=left><img src="/res/q_006.png" width="50%" /></div>
@@ -113,33 +115,34 @@ To become aware of the key fork, we adjust some finalization conditions. The pre
 
 When a key fork is detected, we find the fork point and the corresponding hesitation period using a backtracking algorithm.<br>
 
-When Block a at height h is generated, we use a natural number n to represent the temporary “hesitation period” at the position of a, and the block at a height of h − n is called the temporary “retracement point”, which is generally equal to the fork point. The value of n is based on the following calculation results:<br>
-(i) If the votes gained by the chain within two voting cycles before a (including) exceed 2/3 of the total votes, n = 0.<br>
+When Block *a* at height *h* is generated, we use a natural number *n* to represent the temporary “hesitation period” at the position of *a*, and the block at a height of *h − n* is called the temporary “retracement point”, which is generally equal to the fork point. The value of *n* is based on the following calculation results:<br>
+(i) If the votes gained by the chain within two voting cycles before *a* (including) exceed 2/3 of the total votes, n = 0.<br>
 *\*(For the same voter, only the final vote is calculated.)*<br>
 
-(ii) If the abovementioned votes are less than or equal to 2/3 of the total votes, all votes with the target at a height of h are traced back to a height of h − 1 and traced back to h − 2 with those votes whose target are at a height of h − 1. By parity of reasoning, when traced back to h − i, if the condition in Clause (i) is satisfied, n = i.<br>
+(ii) If the abovementioned votes are less than or equal to 2/3 of the total votes, all votes with the target at a height of *h* are traced back to a height of *h − 1* and traced back to *h − 2* with those votes whose target are at a height of *h − 1*. By parity of reasoning, when traced back to *h − i*, if the condition in Clause (i) is satisfied, *n = i*.<br>
 *\*(Most of the votes on the block with the target at a height of h are saved in the block at a height of h + 1; hence, the above work is performed when block a′, the next block of block a, is generated. The corresponding n values are also saved in a′, but this does not influence the algorithm because a′ has been generated before n is used. Further, “all votes with the target at a height of h” can be improved to “all of the votes saved at a height of h + 1” by parity of reasoning. Thus, the votes that are not recorded at the first time or delayed to be published can be calculated.)*<br>
 
-(iii) The height of the temporary retracement points at Position a cannot be lower than that of the actual retracement point at the position two cycles before a.<br>
+(iii) The height of the temporary retracement points at Position *a* cannot be lower than that of the actual retracement point at the position two cycles before *a*.<br>
 *\*(Alternatively, the retracement points can be replaced by later retracement points with a lower height, but they cannot be later than two cycles; that is, it should comply with the rule in Clause (iv). Two cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 8.)*<br>
 
 ><div align=left><img src="/res/q_008.png" width="60%" /></div>
 <br>
 
-(iv) The actual retracement point at Position a is taken from the earliest temporary retracement point during two cycles after Position a (including), and the actual hesitation period N also results from this.<br> 
+(iv) The actual retracement point at Position *a* is taken from the earliest temporary retracement point during two cycles after Position *a* (including), and the actual hesitation period *N* also results from this.<br> 
 *\*(Therefore, in the worst case, a block has to wait for two cycles after it is generated until it can be finalized. However, provided that one chain after this block gains 2/3 of the votes during those two cycles, there will be no retracement point earlier than this block, and we can get the actual retracement point right then so that it can be finalized immediately.)*<br><br>
 
 #### 2.4.4 Voting retracement and delayed finalization
 After the hesitation period is gained, the voting retracement and block finalization processes are shown as follows:<br>
 
-(1) Each vote of a miner only uses the block of his previous vote target or the block that traces back within N steps (including) from it as the source. N value is taken from the actual hesitation period at the height of the miner’s previous voting target in the related chain, and miners who violate this rule will be punished (as shown in Fig. 8).<br>
+(1) Each vote of a miner only uses the block of his previous vote target or the block that traces back within *N* steps (including) from it as the source. *N* value is taken from the actual hesitation period at the height of the miner’s previous voting target in the related chain, and miners who violate this rule will be punished (as shown in Fig. 8).<br>
 *\*(“The related chain” is the current chain and the chain where the target of the previous vote is located. If they are different, we will obtain the actual hesitation period of both chains and use the shorter one.* <sup>[2](#Notes),[3](#Notes)</sup>) <br>
 *\*(“The height of the miner’s previous voting target” can be improved to “the height of the block, where the miner’s previous vote is saved in the current chain − 1”, which corresponds to the improvement after Clause (ii) of the backtracking algorithm.)* <br>
 
-(2) Count from the root, when a branch obtains more than 2/3 of the total votes in one voting cycle and the distances between the sources and targets of those votes are less than two voting cycles, the finalization condition is satisfied. However, the finalized block is not the branch’s root b but the actual retracement point B at Position b (as shown in Fig. 9).<br>
+(2) Count from the root, when a branch obtains more than 2/3 of the total votes in one voting cycle and the distances between the sources and targets of those votes are less than two voting cycles, the finalization condition is satisfied. However, the finalized block is not the branch’s root *b* but the actual retracement point *B* at Position *b* (as shown in Fig. 9).<br>
 
 ><div align=left><img src="/res/q_009.png" width="50%" /></div>
 <br>
+
 By this method, generally (in an ideal case), all N values are zero. We can complete the finalization around the 2/3 voting cycle after the block is generated. Some forks with serious divergences can extend the length of several cycles; however, the average finalization time should be far less than two cycles. With poor network situation or votes being scattered because of attacks, we can become aware of the fork in advance and delay the finalization, relax the requirements for voting, and improve the fault tolerance of the system to prevent hostile attacks of swinging to extend the depths of a fork from causing the loss of liveness. By the way, our calculation method for branch weight, unlike the latest message driven scheme, does not only count the final vote but also count all votes and restrict votes with the voting cycle because it will have stronger resistance to such attacks. <sup>[4](#Notes)</sup> <br><br>
 
 ### 2.5 Punishments, awards, and antecedent money
