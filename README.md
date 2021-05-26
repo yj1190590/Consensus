@@ -123,8 +123,6 @@ When Block a at height h is generated, we use a natural number n to represent th
 (iii) The height of the temporary retracement points at Position a cannot be lower than that of the actual retracement point at the position two cycles before a.<br>
 *\*(Alternatively, the retracement points can be replaced by later retracement points with a lower height, but they cannot be later than two cycles; that is, it should comply with the rule in Clause (iv). Two cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 8.)*<br>
 
-*撒大苏打*
-
 ><div align=left><img src="/res/q_008.png" width="60%" /></div>
 <br>
 
