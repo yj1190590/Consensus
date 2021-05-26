@@ -37,7 +37,7 @@ Introducing qualification for voting decreases and flexibly controls the number 
 
 ### 2.2 Competition and generation of blocks
 Stakeholders participate in the building and maintenance of the blockchain after becoming miners. To gain awards, miners would have to compete with each other for the right to build blocks:<br>
-(1) A random number operation is conducted based on constants (such as timestamp and block hash) at miner nodes. When the expected results reach a certain target and meet the requirements to generate blocks, it is denoted as 
+(1) A random number operation is conducted based on constants (such as timestamp and block hash) by miners. When the expected results reach a certain target and meet the requirements to generate blocks, it is denoted as 
 <p>Block_Proof < target * votes * efficiency,</p>
 where target refers to difficulty, which controls the speed of block generation; votes refers to the votes owned by miners and is directly proportional to the possibility of block generation; and efficiency refers to the efficiency of block generation, which is affected by various factors and which will be later introduced in detail.<br>
  
