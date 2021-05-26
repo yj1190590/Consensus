@@ -8,7 +8,7 @@
 3. Hesitation period <br><br>
 
 ## 1. Introduction
-This study originally designs a safe and practicable chain-based consensus protocol that provides better services for the public blockchain system. Compared with the Byzantine fault tolerant (BFT) consensus, the chain-based consensus is more suitable for the core orientation of the public chain (mainly the cryptocurrency system) in the open strategy for validators. Moreover, it expands with competition and is more intuitive, concise, and efficient in terms of the working principle. Furthermore, it is more mature in applications  . Until now, chain-based consensus schemes have not exploited those advantages to the fullest. Compared with the traditional chain-based consensus, BFT consensus has some excellent properties, which we attempted to realize in this design.<br>
+The original intention of this study was to design a safe and practicable chain-based consensus protocol that provides better services for the public blockchain system. Compared with the Byzantine fault tolerant (BFT) consensus, the chain-based consensus is more suitable for the core orientation of the public chain (mainly the cryptocurrency system) in the open strategy for validators. Moreover, it expands with competition and is more intuitive, concise, and efficient in terms of the working principle. it is more mature in applications such as Bitcoin and Ethereum. Until now, chain-based consensus schemes have not exploited those advantages to the fullest. Compared with the traditional chain-based consensus, BFT consensus has some excellent properties, which we attempted to realize in this design.<br>
 
 In the cryptocurrency system, our most basic need is a usable “ledger,” and we are not concerned whether the nodes are synchronized at all times. Thus, the requirements of many distributed systems are arduous. Although protocols such as Practical Byzantine Fault Tolerance (PBFT) have applied the ledger function, they cannot support more validators because complex interactions among nodes are tedious and message complexity is high, which reduces efficiency when public network conditions are poor. However, such systems have advantages such as low energy consumption, high flux, and clear “finalization” points, which are features deficient in the original chain-based consensus. Nonetheless, continuous improvement has yielded corresponding solutions.<br>
 
@@ -89,7 +89,7 @@ From the mechanism of cycle voting, when dishonest users do not exceed 1/3, we d
 
 (6) The Genesis block is the first finalized block and can be used as the source of later votes without violating other rules.<br>
 
-(7) Votes whose source is located at the finalized block are called “rooted votes”. Only rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block are also regarded as finalized. The “rooted votes” can be transmitted forward. (as shown in Fig. 3 and Fig. 4.)<br>
+(7) Votes whose source is located at the finalized block are called “rooted votes”. Only rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block are also regarded as finalized. The “rooted votes” can be transmitted forward. The details mentioned here are presented in Fig. 3 and Fig. 4. <br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted.)*<br>
 
 ><div align=left><img src="/res/q_003_004.png" width="60%" /></div>
@@ -169,6 +169,6 @@ Patent NO.: 202110495622.6.
 
 <sup>3</sup>	Miners will use the longest hesitation period they get if the actual hesitation period does not show up. It can be too strict with the current vote, but it does not affect safety because the retracement point is later than the actual one. It does not affect liveness either, because the actual retracement points will be back to the points of key forks later and the voters can return to the canonical chain from their follow-up votes. [←](#244-Voting-retracement-and-delayed-finalization) <br>
 
-<sup>4</sup>	When only the final vote is counted and votes are not restricted by the voting cycle, the vote of an attacker on one fork not only increases the weight of the current branch but also reduces the weight from the previous branch that he voted. Such a process causes that the effect of such an attack is twice the weight of his votes. [←](#244-Voting-retracement-and-delayed-finalization) <br>
+<sup>4</sup>	When only the final vote is counted and votes are not restricted by the voting cycle, the vote of an attacker on one fork not only increases the weight of the current branch but also reduces the weight from the previous branch that the attacker voted. Such a process causes that the effect of such an attack is twice the weight of his votes. [←](#244-Voting-retracement-and-delayed-finalization) <br>
 
 
