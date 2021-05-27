@@ -112,7 +112,7 @@ However, this cannot meet the requirements for liveness because it is very likel
 #### 2.4.3 Awareness and positioning of the key fork
 To become aware of the key fork, we adjust some finalization conditions. The previous condition in which “more than 2/3 of the total votes be gained during one voting cycle” is replaced with “more than 2/3 of the total votes be gained during one voting cycle and the distance between the targets and the sources of those votes is less than two cycles.” Therefore, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes that can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 7). This way, we need only to inspect whether there are sufficient votes in this range.<br>
 
-><div align=left><img src="/res/q_007.png" width="550" /></div>
+><div align=left><img src="/res/q_007.png" width="525" /></div>
 <br>
 
 When a key fork is detected, we find the fork point and the corresponding hesitation period using a backtracking algorithm.<br>
@@ -127,7 +127,7 @@ When Block *a* at height *h* is generated, we use a natural number *n* to repres
 (iii) The height of the temporary retracement points at Position *a* cannot be lower than that of the actual retracement point at the position two cycles before *a*.<br>
 *\*(Alternatively, the retracement points can be replaced by later retracement points with a lower height, but they cannot be later than two cycles; that is, it should comply with the rule in Clause (iv). Two cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 8.)*<br>
 
-><div align=left><img src="/res/q_008.png" width="575" /></div>
+><div align=left><img src="/res/q_008.png" width="550" /></div>
 <br>
 
 (iv) The actual retracement point at Position *a* is taken from the earliest temporary retracement point during two cycles after Position *a* (including), and the actual hesitation period *N* also results from this.<br> 
