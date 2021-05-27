@@ -51,7 +51,7 @@ As a consensus with forks and branches, the most important step in the consensus
 #### 2.3.1 Priority of branches
 In our protocol, the priority of branches depends on their “weight” rather than their height. The “weight” here is not equal to the number of blocks but is equal to the votes gained by the branch. The weight of a branch is the number of total votes gained by the root and all its descendants. From this calculation method, the comparison of two chains in priority begins from their common ancestors and the weight of the respective branches they belong to be calculated. The heavier one takes priority. To find the canonical chain, we should compare the existing competitive branches one by one and find the chain with the highest priority (as shown in Fig. 1).<br>
 
-><div align=left><img src="/res/q_001.png" width="50%" /></div>
+><div align=left><img src="/res/q_001.png" width="300" /></div>
 <br>
 
 #### 2.3.2 Incentive measures
