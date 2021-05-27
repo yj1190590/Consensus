@@ -57,7 +57,7 @@ In our protocol, the priority of branches depends on their “weight” rather t
 #### 2.3.2 Incentive measures
 Some problems should be solved in the voting process. First, miners should be motivated to vote. The miners can be motivated by making the “correctness” of voting relevant to the efficiency of block generation, where the efficiency of block generation is determined from the distance (explained later) between the “last cycle vote” (the vote within the scope of one period to two periods before) and the current chain. Then, this produces the following two problems: when a fork happens, if the miner chooses to vote on the more stable blocks before the fork to pursue correctness, the stable speed of the system will be affected, or if the miner delays the voting until the fork has presented an obvious winner, the stable speed of the system will also be affected. We modify the original voting rule for those two problems. The previous rule is that “the interval of votes cannot be less than the length of one cycle,” but this rule adds that “the interval between the block that records a vote and the next vote cannot be less than the length of ‘one cycle − 1’.” According to the rule, once a miner votes an earlier block or delays voting, the interval between his current vote and the next vote will surpass one cycle, and a “blank period” appears in his voting sequence. Once the “two cycles − 1 ago” block is located in this blank, the miner’s “last cycle vote” in this position will not exist, so its correctness is zero, and the miner cannot build blocks (as shown in Fig. 2).<br>
 
-><div align=left><img src="/res/q_002.png" width="450" /></div>
+><div align=left><img src="/res/q_002.png" width="550" /></div>
 <br>
 
 To minimize such blank periods, the miner should vote as early as possible and should vote on the top block. Moreover, we solve it by making the “importance” of voting relevant to the efficiency of block generation. This raises the value of the votes when the miners vote after a fork by the decision that “the less is the number of correct votes, the more important an individual vote is.”<br>
@@ -95,7 +95,7 @@ From the mechanism of cycle voting, when dishonest users do not exceed 1/3, we d
 (7) Votes whose source is located at the finalized block are called “rooted votes”. Only rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block are also regarded as finalized. The “rooted votes” can be transmitted forward. The details mentioned here are presented in Fig. 3 and Fig. 4. <br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted.)*<br>
 
-><div align=left><img src="/res/q_003_004.png" width="450" /></div>
+><div align=left><img src="/res/q_003_004.png" width="500" /></div>
 <br>
 
 #### 2.4.2 Safety and liveness
@@ -112,7 +112,7 @@ However, this cannot meet the requirements for liveness because it is very likel
 #### 2.4.3 Awareness and positioning of the key fork
 To become aware of the key fork, we adjust some finalization conditions. The previous condition in which “more than 2/3 of the total votes be gained during one voting cycle” is replaced with “more than 2/3 of the total votes be gained during one voting cycle and the distance between the targets and the sources of those votes is less than two cycles.” Therefore, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes that can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 7). This way, we need only to inspect whether there are sufficient votes in this range.<br>
 
-><div align=left><img src="/res/q_007.png" width="450" /></div>
+><div align=left><img src="/res/q_007.png" width="500" /></div>
 <br>
 
 When a key fork is detected, we find the fork point and the corresponding hesitation period using a backtracking algorithm.<br>
@@ -127,7 +127,7 @@ When Block *a* at height *h* is generated, we use a natural number *n* to repres
 (iii) The height of the temporary retracement points at Position *a* cannot be lower than that of the actual retracement point at the position two cycles before *a*.<br>
 *\*(Alternatively, the retracement points can be replaced by later retracement points with a lower height, but they cannot be later than two cycles; that is, it should comply with the rule in Clause (iv). Two cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 8.)*<br>
 
-><div align=left><img src="/res/q_008.png" width="450" /></div>
+><div align=left><img src="/res/q_008.png" width="400" /></div>
 <br>
 
 (iv) The actual retracement point at Position *a* is taken from the earliest temporary retracement point during two cycles after Position *a* (including), and the actual hesitation period *N* also results from this.<br> 
