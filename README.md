@@ -95,7 +95,7 @@ From the mechanism of cycle voting, when dishonest users do not exceed 1/3, we d
 (7) Votes whose source is located at the finalized block are called “rooted votes”. Only rooted votes have weight and correctness, thus progressively producing subsequent finalized blocks. Meanwhile, the ancestor blocks of the finalized block are also regarded as finalized. The “rooted votes” can be transmitted forward. The details mentioned here are presented in Fig. 3 and Fig. 4. <br>
 *\*(Transmission means that if c is a rooted vote, the vote connecting c as a source is also rooted.)*<br>
 
-><div align=left><img src="/res/q_003_004.png" width="500" /></div>
+><div align=left><img src="/res/q_003_004.png" width="550" /></div>
 <br>
 
 #### 2.4.2 Safety and liveness
@@ -112,7 +112,7 @@ However, this cannot meet the requirements for liveness because it is very likel
 #### 2.4.3 Awareness and positioning of the key fork
 To become aware of the key fork, we adjust some finalization conditions. The previous condition in which “more than 2/3 of the total votes be gained during one voting cycle” is replaced with “more than 2/3 of the total votes be gained during one voting cycle and the distance between the targets and the sources of those votes is less than two cycles.” Therefore, only the branch selected by continuous votes (their intervals are not more than two cycles) can be finalized. This condition concentrates the sources of all votes that can reach finalization in the range of two cycles before the finalization point (as shown in Fig. 7). This way, we need only to inspect whether there are sufficient votes in this range.<br>
 
-><div align=left><img src="/res/q_007.png" width="500" /></div>
+><div align=left><img src="/res/q_007.png" width="550" /></div>
 <br>
 
 When a key fork is detected, we find the fork point and the corresponding hesitation period using a backtracking algorithm.<br>
@@ -127,7 +127,7 @@ When Block *a* at height *h* is generated, we use a natural number *n* to repres
 (iii) The height of the temporary retracement points at Position *a* cannot be lower than that of the actual retracement point at the position two cycles before *a*.<br>
 *\*(Alternatively, the retracement points can be replaced by later retracement points with a lower height, but they cannot be later than two cycles; that is, it should comply with the rule in Clause (iv). Two cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 8.)*<br>
 
-><div align=left><img src="/res/q_008.png" width="400" /></div>
+><div align=left><img src="/res/q_008.png" width="500" /></div>
 <br>
 
 (iv) The actual retracement point at Position *a* is taken from the earliest temporary retracement point during two cycles after Position *a* (including), and the actual hesitation period *N* also results from this.<br> 
@@ -142,7 +142,7 @@ After the hesitation period is gained, the voting retracement and block finaliza
 
 (2) Count from the root, when a branch obtains more than 2/3 of the total votes in one voting cycle and the distances between the sources and targets of those votes are less than two voting cycles, the finalization condition is satisfied. However, the finalized block is not the branch’s root *b* but the actual retracement point *B* at Position *b* (as shown in Fig. 9).<br>
 
-><div align=left><img src="/res/q_009.png" width="450" /></div>
+><div align=left><img src="/res/q_009.png" width="400" /></div>
 <br>
 
 By this method, generally (in an ideal case), all *N* values are zero. We can complete the finalization around the 2/3 voting cycle after the block is generated. Some forks with serious divergences can extend the length of several cycles; however, the average finalization time should be far less than two cycles. With poor network situation or votes being scattered because of attacks, we can become aware of the fork in advance and delay the finalization, relax the requirements for voting, and improve the fault tolerance of the system to prevent hostile attacks of swinging to extend the depths of a fork from causing the loss of liveness. By the way, our calculation method for branch weight, unlike the latest message driven scheme, does not only count the final vote but also count all votes and restrict votes with the voting cycle because it will have stronger resistance to such attacks. <sup>[4](#Notes)</sup> <br><br>
