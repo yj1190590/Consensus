@@ -127,7 +127,7 @@ When Block *a* at height *h* is generated, we use a natural number *n* to repres
 (iii) The height of the temporary retracement points at Position *a* cannot be lower than that of the actual retracement point at the position two cycles before *a*.<br>
 *\*(Alternatively, the retracement points can be replaced by later retracement points with a lower height, but they cannot be later than two cycles; that is, it should comply with the rule in Clause (iv). Two cycles is the distance when the key fork is detected at the worst case, as shown in Fig. 8.)*<br>
 
-><div align=left><img src="/res/q_008.png" width="500" /></div>
+><div align=left><img src="/res/q_008.png" width="600" /></div>
 <br>
 
 (iv) The actual retracement point at Position *a* is taken from the earliest temporary retracement point during two cycles after Position *a* (including), and the actual hesitation period *N* also results from this.<br> 
